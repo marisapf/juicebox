@@ -254,6 +254,21 @@ async function addTagsToPost(postId, tagList) {
         throw error;
     }
 }
+
+//function getAllTags *FROM PART 2, SECOND WEEK
+//Should tags be an array of tags? 
+async function getAllTags() {
+    try {
+        const { rows } = await client.query(`
+           SELECT *
+           FROM tags;
+           `);
+    return rows;
+    } catch (error) {
+      throw error;
+    }
+}
+
 //PART 3 function getPostById 
 async function getPostById(postId) {
     try {
@@ -323,7 +338,10 @@ module.exports = {
     createPostTag,
     addTagsToPost,
     getPostById,
-    getPostsByTagName
+    getPostsByTagName,
+
+    //second week
+    getAllTags
 }
 
 /*
