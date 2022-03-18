@@ -93,3 +93,25 @@ connect express server with database
 
 **review the error part, end of video 
 subrouters, main routers, main router be used my express app
+
+FRONT END WILL MAKE REQUESTS THAT LOOK LIKE THIS:
+
+fetch('our api url', {
+  method: 'SOME_METHOD',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer HOLYMOLEYTHISTOKENISHUGE'
+  },
+  body: JSON.stringify({})
+})
+
+We need the Content-Type set so that our bodyParser module will be able to read off anything we need from the user (like form data).
+
+We need the Authorization set so that we can read off that Bearer token.
+
+3-17-22
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJzYW5kcmEiLCJpYXQiOjE2NDc1NzA4ODl9.JLFLzvf9xNx5_aUOSP1v6kJVj5sgx_-K7f5WHCvCWKo
+
+curl http://localhost:3000/api -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJzYW5kcmEiLCJpYXQiOjE2NDc1NzA4ODl9.JLFLzvf9xNx5_aUOSP1v6kJVj5sgx_-K7f5WHCvCWKo'
+
+curl http://localhost:3000/api -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc1NzQ4MzZ9.vzkCebSuhCkO_qohQV7_0PmB5G1fmMkPf6c9WW1oncc'

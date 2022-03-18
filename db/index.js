@@ -42,9 +42,9 @@ async function updateUser(id, fields = {}) {
         RETURNING *;
       `, Object.values(fields));
 
-        return user;
+    return user;
     } catch (error) {
-        throw error;
+    throw error;
     }
 }
 
@@ -79,6 +79,21 @@ async function getUserById(userId) {
       throw error
     }
 }
+
+/*Part 2 of Part 2*/
+async function getUserByUsername(username) {
+    try {
+      const { rows: [user] } = await client.query(`
+        SELECT *
+        FROM users
+        WHERE username=$1;
+      `, [username]);
+  
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 /*POSTS methods*/
 
@@ -328,6 +343,7 @@ module.exports = {
     updateUser,
     getAllUsers,
     getUserById,
+    getUserByUsername,
     createPost,
     updatePost,
     getAllPosts,
