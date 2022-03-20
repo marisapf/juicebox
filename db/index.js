@@ -364,27 +364,10 @@ module.exports = {
 }
 
 /*
-
 const client = new Client('postgres://localhost:5432/juicebox-dev');
-
-*why was this on line 2
-const { user } = require('pg/lib/defaults');
-
-previous updatePost 
-
-async function updatePost(id, fields = {}) {
-
-    const setString = Object.keys(fields).map(
-        (key, index) => `"${key}"=$${index + 1}`
-    ).join(', ');
-
-    if (setString.length === 0) {
-        return;
-    }
 
 FROM createTags
 console.log('insertValues,', `VALUES (${insertValues})`);
 console.log('selectValues,', ` IN (${selectValues})`);
-
 */
 

@@ -21,29 +21,29 @@ const {
 
 async function dropTables() {
     try {
-    
-    console.log("Starting to drop tables...")
 
-    await client.query(`  
+        console.log("Starting to drop tables...")
+
+        await client.query(`  
        DROP TABLE IF EXISTS post_tags;
        DROP TABLE IF EXISTS tags;
        DROP TABLE IF EXISTS posts;
        DROP TABLE IF EXISTS users;
     `);
 
-    console.log("Finished dropping tables!");
+        console.log("Finished dropping tables!");
     } catch (error) {
-    console.error("Error dropping tables!")
-      throw error;
+        console.error("Error dropping tables!")
+        throw error;
     }
 }
 
 /* TABLE PART 3, tags and post_tags  */
 async function createTables() {
     try {
-    console.log("Starting to build tables...");
+        console.log("Starting to build tables...");
 
-    await client.query(`
+        await client.query(`
      CREATE TABLE users (
        id SERIAL PRIMARY KEY, 
        username varchar(255) UNIQUE NOT NULL,
@@ -74,10 +74,10 @@ async function createTables() {
     
   `)
 
-    console.log("Finished building tables!")
+        console.log("Finished building tables!")
     } catch (error) {
-    console.error("Error building tables!")
-      throw error;
+        console.error("Error building tables!")
+        throw error;
     }
 }
 
@@ -139,8 +139,8 @@ async function rebuildDB() {
         await createInitialPosts();
 
     } catch (error) {
-      console.log("Trouble rebuilding DB")
-      throw error;
+        console.log("Trouble rebuilding DB")
+        throw error;
     }
 }
 
@@ -150,49 +150,49 @@ async function testDB() {
 
         console.log("Calling getAllUsers");
         const users = await getAllUsers();
-        console.log("Result:", users);
+        console.log("SEED, users:", users);
 
-        console.log("Calling updateUser on users[0]")
+        console.log("SEED, Calling updateUser on users[0]", users[0]);
         const updateUserResult = await updateUser(users[0].id, {
             name: "Newname Sogood",
             location: "Lesterville, KY"
         });
-        console.log("Result:", updateUserResult);
+        console.log("SEED updateUserResult:", updateUserResult);
 
         console.log("Calling getAllPosts");
         const posts = await getAllPosts();
-        console.log("Result: ", posts);
+        console.log("SEED, posts: ", posts);
 
-        console.log("Calling updatePost on posts[0]: ");
+        console.log("SEED Calling updatePost on posts[0]: ", posts[0]);
         const updatePostResult = await updatePost(posts[0].id, {
             title: "New Title",
             content: "Updated Content"
         });
-        console.log("Result:", updatePostResult);
+        console.log("SEED, updatePostResult:", updatePostResult);
 
         console.log("Calling getUserById with 1");
         const albert = await getUserById(1);
-        console.log("Result:", albert);
+        console.log("SEED, albert:", albert);
 
-        console.log("Calling all posts by user with userId 2: ");
+        console.log("SEED, Calling all posts by user with userId 2: ");
         const user2posts = await getPostsByUser(2);
-        console.log('getPostsByUser(2)', user2posts);
+        console.log('SEED, getPostsByUser(2)', user2posts);
 
-        console.log("Calling updatePost on posts[1], only updating tags");
+        console.log("SEED, Calling updatePost on posts[1], only updating tags");
         const updatePostTagsResult = await updatePost(posts[1].id, {
             tags: ["#youcandoanything", "#redfish", "#bluefish"]
         });
-        console.log("Result:", updatePostTagsResult);
+        console.log("SEED, updatePostTagsResult:", updatePostTagsResult);
 
-        console.log("Calling getPostsByTagName with #happy");
+        console.log("SEED, Calling getPostsByTagName with #happy");
         const postsWithHappy = await getPostsByTagName("#happy");
-        console.log("Result:", postsWithHappy);
+        console.log("SEED, getPostsByTagName with #happy:", postsWithHappy);
 
-     console.log("Finished building database tests!")
+        console.log("SEED, Finished building database tests!")
 
     } catch (error) {
-     console.error("Error testing database!");
-      throw error;
+        console.error("SEED, Error testing database!");
+        throw error;
     }
 }
 
@@ -200,32 +200,3 @@ rebuildDB()
     .then(testDB)
     .catch(console.error)
     .finally(() => client.end());
-
-/* 
-
-PART 3,
-
-async function createInitialTags() {
-    try {
-        console.log("Starting to create initial tags...");
-
-        const [happy, sad, inspo, catman] = await createTags([
-            '#happy',
-            '#worst-day-ever',
-            '#youcandoanything',
-            '#catmandoeverything'
-        ]);
-
-        const [postOne, postTwo, postThree] = await getAllPosts();
-
-        await addTagsToPost(postOne.id, [happy, inspo]);
-        await addTagsToPost(postTwo.id, [sad, inspo]);
-        await addTagsToPost(postThree.id, [happy, catman, inspo]);
-
-        console.log("Finished creating tags!");
-    } catch (error) {
-        console.log("Trouble creating tags!");
-        throw error;
-    }
-}
-*/
