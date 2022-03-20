@@ -1,3 +1,4 @@
+/*api index.js, api router, routes to posts, tags, users*/
 const express = require('express');
 const apiRouter = express.Router();
 
@@ -11,13 +12,18 @@ apiRouter.use(async (req, res, next) => {
     const auth = req.header('Authorization');
 
     if (!auth) {
-        next();
+        next();  
+    //this is parsing the header
     } else if (auth.startsWith(prefix)) {
-        console.log('prefix', prefix);
+
+        console.log('prefix:', prefix);
+        console.log('auth: ', auth)
+
         const token = auth.slice(prefix.length)
-        // const [_, token] = auth.split(' ')
-        console.log("token in api index.js:", token);
-        console.log("JWT_SECRET:",JWT_SECRET);
+
+        console.log("token in api/index.js:", token);
+        console.log("JWT_SECRET in api/index.js:", JWT_SECRET);
+
         try {
             const { id } = jwt.verify(token, JWT_SECRET);
 
@@ -37,8 +43,9 @@ apiRouter.use(async (req, res, next) => {
 });
 
 apiRouter.use((req, res, next) => {
-    if(req.user) {
-     console.log("User is set:", req.user);
+    if (req.user) {
+        console.log("from api/index, User is set, req.user:", req.user);
+        console.log('from api/index, req.user.id: ', req.user.id);
     }
     next();
 });
@@ -54,12 +61,24 @@ const tagsRouter = require('./tags');
 apiRouter.use('/tags', tagsRouter);
 
 /*Part 2, simple error handler */
-
 apiRouter.use((error, req, res, next) => {
- res.send({
-  name: error.name,
-  message: error.message
- });
+    res.send({
+        name: error.name,
+        message: error.message
+    });
 });
 
 module.exports = apiRouter;
+
+/*
+can also use this: 
+const [_, token] = auth.split(' ')
+
+*this goes with main router
+get authorization field from headers
+parse auth field to get token
+json.verify to verify token to see if valid
+if valid, attach user info to request 
+if not, call next();
+
+*/

@@ -1,9 +1,9 @@
+/* USERS ROUTER */
 const express = require('express');
 const usersRouter = express.Router();
 const { getAllUsers, createUser, getUserByUsername } = require('../db')
 
 const jwt = require('jsonwebtoken');
-//const token = jwt.sign({ id, username }, process.env.JWT_SECRET)
 
 usersRouter.use((req, res, next) => {
     console.log("A request is being made to /users");
@@ -13,7 +13,6 @@ usersRouter.use((req, res, next) => {
 
 usersRouter.get('/', async (req, res) => {
     const users = await getAllUsers();
-
     res.send({
         users
     });
@@ -21,11 +20,8 @@ usersRouter.get('/', async (req, res) => {
 
 /* Part 2 of Part 2 */
 usersRouter.post('/login', async (req, res, next) => {
-    const { username, password } = req.body; //do I need to put id in the object?
+    const { username, password } = req.body; 
 
-    //does this go here?
-    //const token = jwt.sign({ id: 1, username: "albert", password: "bertie99" }, process.env.JWT_SECRET)
-    
     if(!username || !password) {
         next({
          name: "MissingCredentialsError",
@@ -38,8 +34,10 @@ usersRouter.post('/login', async (req, res, next) => {
       
       if (user && user.password == password) {
         console.log("user: ", user);
+        
         const token = jwt.sign({ id: user.id , username: user.username }, process.env.JWT_SECRET)
         console.log("token in users.js: ", token);
+        
         res.send({ message: "You're logged in!", token });
 
       } else {
@@ -94,8 +92,10 @@ usersRouter.post('/register', async (req, res, next) => {
 module.exports = usersRouter;
 
 /*
-res.send({ message: 'hello from /users!' });
 
+put this in usersRouter.post, after the user has signed in 
+const token = jwt.sign({ id, username }, process.env.JWT_SECRET)
+    
 usersRouter.post('/login', async (req, res, next) => {
     console.log('req.body: ', req.body);
     res.send();

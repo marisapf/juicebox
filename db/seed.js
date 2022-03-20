@@ -1,3 +1,4 @@
+/*seed.js, tables, users, posts*/
 const {
     client,
     createUser,
@@ -201,19 +202,8 @@ rebuildDB()
     .finally(() => client.end());
 
 /* 
-const result = await client.query(`SELECT * FROM users;`);
-console.log('result:', result);
 
-const { rows } = await client.query(`SELECT * FROM users;`);
-console.log('rows: ', rows);
-
-console.log(getAllUsers());
-
-console.log("Calling all posts by user with userId 2: ");
-const sandrasPosts = await getPostsByUser(2);
-console.log("Result: ", sandrasPosts.content); //comes back undefined
-
-//PART 3, function createInitialTags
+PART 3,
 
 async function createInitialTags() {
     try {
@@ -238,6 +228,4 @@ async function createInitialTags() {
         throw error;
     }
 }
-PART 3
-await createInitialTags();
 */

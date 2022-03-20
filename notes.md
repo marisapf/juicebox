@@ -115,3 +115,80 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJzYW5kcmEiLCJpYXQ
 curl http://localhost:3000/api -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJzYW5kcmEiLCJpYXQiOjE2NDc1NzA4ODl9.JLFLzvf9xNx5_aUOSP1v6kJVj5sgx_-K7f5WHCvCWKo'
 
 curl http://localhost:3000/api -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc1NzQ4MzZ9.vzkCebSuhCkO_qohQV7_0PmB5G1fmMkPf6c9WW1oncc'
+
+FROM tags.js
+ if (tagName) {
+
+    //console.log('', );
+    //console.log('SAT tagName:', tagName); //#happy 
+
+    //send out an object to the client { posts: // the posts } 
+        } else {
+           next({
+               name: 'TagError',
+               message: 'Does not match any tags'
+           })
+       }
+
+
+3-18 / 3-19
+
+encodeUriComponent 
+
+encode the hashtag #happy
+'#' with a string
+made sure hash is encoded 
+
+unicode
+
+'#'  hex utf-8  
+%23   U+0023
+
+TOKEN:
+ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc2MzAxNTR9.aSMfOmtVwrIgp8CicAcZLJBzMmFRxVXFYuV_o5EjmrA
+
+3-19 Saturday 
+last part of part 2, PART 3,  (part 2)  WRITING POST/api/posts 
+
+curl http://localhost:3000/api/users/login -H "Content-Type: application/json" -X POST -d '{"username": "albert", "password": "bertie99"}'
+
+{"message":"You're logged in!","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc2MzAxNTR9.aSMfOmtVwrIgp8CicAcZLJBzMmFRxVXFYuV_o5EjmrA"}
+
+CORRECT REQUEST  **this worked
+curl http://localhost:3000/api/posts -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc2MzAxNTR9.aSMfOmtVwrIgp8CicAcZLJBzMmFRxVXFYuV_o5EjmrA'
+
+response:
+{"message":"You're logged in!","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc3MTAwMjB9.NQDrs2-DCiILJiP9cFfgs7-Lrgt
+
+MISSING TAGS **mostly worked
+ curl http://localhost:3000/api/posts -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc2MzAxNTR9.aSMfOmtVwrIgp8CicAcZLJBzMmFRxVXFYuV_o5EjmrA' -H 'Content-Type: application/json' -d '{"title": "I still do not like tags", "content": "CMON! why do people use them?"}'
+
+response: 
+{"post":{"id":20,"title":"I still do not like tags","content":"CMON! why do people use them?","active":true,"tags":[{"id":17,"name":""}]}}
+
+MISSING TITLE OR CONTENT 
+curl http://localhost:3000/api/posts -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc2MzAxNTR9.aSMfOmtVwrIgp8CicAcZLJBzMmFRxVXFYuV_o5EjmrA' -H 'Content-Type: application/json' -d '{"title": "I am quite frustrated"}'
+
+response: 
+{"name":"error","message":"null value in column \"content\" violates not-null constraint"}
+
+CHECK Writing PATCH/api/posts/:id
+
+curl http://localhost:3000/api/posts/1 -X PATCH -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc2MzAxNTR9.aSMfOmtVwrIgp8CicAcZLJBzMmFRxVXFYuV_o5EjmrA' -H 'Content-Type: application/json' -d '{"title": "updating my old stuff", "tags": "#oldisnewagain"}'
+
+CHECK Writing GET/api/tags/:tagName/posts
+
+curl http://localhost:3000/api/tags/%23happy/posts
+
+CHECK Delete
+
+curl http://localhost:3000/api/posts/1 -X DELETE -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc2MzAxNTR9.aSMfOmtVwrIgp8CicAcZLJBzMmFRxVXFYuV_o5EjmrA'
+
+
+LAST
+
+curl http://localhost:3000/api/posts
+
+curl http://localhost:3000/api/posts -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDc2MzAxNTR9.aSMfOmtVwrIgp8CicAcZLJBzMmFRxVXFYuV_o5EjmrA'
+
+curl http://localhost:3000/api/tags/%23happy/posts
