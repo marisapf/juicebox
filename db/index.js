@@ -1,6 +1,6 @@
 /*db index.js, user, post, tag functions */
 const { Client } = require('pg');
-const client = new Client('postgres://localhost:5432/juicebox-dev');
+const client = new Client(process.env.DATABASE_URL || 'postgres://localhost:5432/juicebox-dev');
 
 /*USER methods */
 
@@ -364,6 +364,9 @@ module.exports = {
 }
 
 /*
+
+const client = new Client('postgres://localhost:5432/juicebox-dev');
+
 *why was this on line 2
 const { user } = require('pg/lib/defaults');
 
